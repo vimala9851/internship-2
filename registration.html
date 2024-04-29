@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registration Form</title>
+  <style>
+    body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background:url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTetg4AY6pIxM-DJKeX4k7G2DR14V0vFaFKucxOETPnlg&s") no-repeat; 
+            background-size: cover;
+            background-position: cover;
+        }
+    .container {
+        width:50%;
+        max-width:400px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        padding: 60px;
+        border:3px solid rgba(7, 7, 7, 0.338); 
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(238, 4, 4, 0.1);
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+      width: 100%;
+      padding: 8px;
+      font-size: 16px;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    .error {
+      color: red;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Registration Form</h2>
+    <form id="registrationForm" onsubmit="validateForm(event)">
+      <div class="form-group">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required>
+        <span class="error" id="usernameError"></span>
+      </div>
+      <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+        <span class="error" id="emailError"></span>
+      </div>
+      <div class="form-group">
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+        <span class="error" id="passwordError"></span>
+      </div>
+      <div class="form-group">
+        <label for="confirmPassword">Confirm Password:</label>
+        <input type="password" id="confirmPassword" name="confirmPassword" required>
+        <span class="error" id="confirmPasswordError"></span>
+      </div>
+      <button type="submit">Register</button>
+    </form>
+  </div>
+  <script>
+    function validateForm(event) {
+      event.preventDefault();
+      
+      
+      document.getElementById('usernameError').textContent = '';
+      document.getElementById('emailError').textContent = '';
+      document.getElementById('passwordError').textContent = '';
+      document.getElementById('confirmPasswordError').textContent = '';
+      
+      
+      var username = document.getElementById('username').value.trim();
+      var email = document.getElementById('email').value.trim();
+      var password = document.getElementById('password').value.trim();
+      var confirmPassword = document.getElementById('confirmPassword').value.trim();
+      
+      
+      var isValid = true;
+      
+      if (username === '') {
+        document.getElementById('usernameError').textContent = 'Username is required';
+        isValid = false;
+      }
+      
+      if (email === '') {
+        document.getElementById('emailError').textContent = 'Email is required';
+        isValid = false;
+      } else if (!isValidEmail(email)) {
+        document.getElementById('emailError').textContent = 'Invalid email format';
+        isValid = false;
+      }
+      
+      if (password === '') {
+        document.getElementById('passwordError').textContent = 'Password is required';
+        isValid = false;
+      } else if (password.length < 6) {
+        document.getElementById('passwordError').textContent = 'Password must be at least 6 characters long';
+        isValid = false;
+      }
+      
+      if (confirmPassword === '') {
+        document.getElementById('confirmPasswordError').textContent = 'Please confirm your password';
+        isValid = false;
+      } else if (confirmPassword !== password) {
+        document.getElementById('confirmPasswordError').textContent = 'Passwords do not match';
+        isValid = false;
+      }
+      
+      
+      if (isValid) {
+        document.getElementById('registrationForm').submit();
+      }
+    }
+    
+    function isValidEmail(email) {
+      
+      var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return emailRegex.test(email);
+    }
+  </script>
+</body>
+</html>
